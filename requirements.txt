@@ -1,4 +1,4 @@
-celery 
+celery[sqs]
 fastapi
 uvicorn[standard]
 pydantic

@@ -6,7 +6,7 @@ settings = get_settings()
 celery_app = Celery(main=settings.proj_name,
                     broker=settings.amqp_dsn,
                     backend=settings.redis_dsn,
-                    include=[])
+                    include=["app.celery_etl.tasks"])
 
 if __name__ == "__main__":
     argv = [
