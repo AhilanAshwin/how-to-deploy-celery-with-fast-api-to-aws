@@ -1,4 +1,3 @@
-from unittest import result
 from fastapi import FastAPI
 from app.config import Settings, get_settings
 from app.celery_etl.tasks import say_hello, say_goodbye
