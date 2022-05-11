@@ -3,12 +3,16 @@ from pydantic import BaseSettings, RedisDsn, AmqpDsn
 
 
 class Settings(BaseSettings):
-    project_name: str = "how-to-deploy-celery-to-aws"
-    version: str = "0.1.0"
-    author: str = "Ahilan Ashwin"
+    PROJECT_NAME: str = "how-to-deploy-celery-to-aws"
+    VERSION: str = "0.1.0"
+    AUTHOR: str = "Ahilan Ashwin"
     # To be changed to sqs and elastic cache
-    redis_dsn: RedisDsn = 'redis://localhost:6379'
-    amqp_dsn: AmqpDsn = 'amqp://guest:guest@localhost:5672'
+    CELERY_RESULT_BACKEND: RedisDsn
+    CELERY_BROKER_URL: AmqpDsn
+
+    class Config:
+        env_file = ".env"
+        env_file_encoding = 'utf-8'
 
 
 @lru_cache

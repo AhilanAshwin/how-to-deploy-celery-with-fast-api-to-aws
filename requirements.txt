@@ -1,4 +1,4 @@
 celery[sqs, redis]
 fastapi
 uvicorn[standard]
-pydantic
+pydantic[dotenv]

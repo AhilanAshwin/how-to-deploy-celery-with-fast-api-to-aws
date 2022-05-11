@@ -3,12 +3,12 @@ from app.config import Settings, get_settings
 from app.celery_etl.tasks import say_hello, say_goodbye
 
 settings = get_settings()
-app = FastAPI(title=settings.project_name, version=settings.version)
+app = FastAPI(title=settings.PROJECT_NAME, version=settings.VERSION)
 
 
 @app.get("/", status_code=200)
 def get_index():
-    return {'title': settings.project_name, 'author': settings.author, 'version': settings.version}
+    return {'title': settings.PROJECT_NAME, 'author': settings.AUTHOR, 'version': settings.VERSION}
 
 
 @app.get('/ping', status_code=200)
