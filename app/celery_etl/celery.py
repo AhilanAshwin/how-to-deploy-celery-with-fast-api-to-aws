@@ -3,7 +3,7 @@ from app.config import get_settings
 
 
 settings = get_settings()
-celery_app = Celery(main=settings.proj_name,
+celery_app = Celery(main=settings.project_name,
                     broker=settings.amqp_dsn,
                     backend=settings.redis_dsn,
                     include=["app.celery_etl.tasks"])
