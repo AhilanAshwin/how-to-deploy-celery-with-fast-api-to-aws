@@ -1,1 +1,1 @@
-# deploy-celery-to-aws
+# deploy-celery-with-fast-api-to-aws
