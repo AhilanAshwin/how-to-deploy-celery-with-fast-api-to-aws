@@ -16,7 +16,7 @@ provider "aws" {
 # These are a set of local values that can be declared together
 locals {
   prefix      = "${var.app_prefix}-${var.environment}"
-  image       = "ahilanashwin/fastapi"
+  image       = var.docker_image
   environment = var.environment
   common_tags = {
     author      = var.author

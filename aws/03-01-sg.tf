@@ -27,5 +27,4 @@ module "alb-security-group" {
   # Egress Rules & CIDR blocks
   egress_rules = ["all-all"]
   tags         = local.common_tags
-
 }

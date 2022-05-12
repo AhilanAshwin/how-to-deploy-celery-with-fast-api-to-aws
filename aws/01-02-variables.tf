@@ -8,6 +8,12 @@ variable "app_name" {
   type        = string
 }
 
+# Set the docker image to deploy to the ecs cluster
+variable "docker_image" {
+  description = "The docker image to deploy for the cluster"
+  type        = string
+}
+
 # Set a prefix name for the project 
 variable "app_prefix" {
   description = "Prefix name to add to all created resources for project"
