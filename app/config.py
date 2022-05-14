@@ -6,6 +6,7 @@ class Settings(BaseSettings):
     PROJECT_NAME: str = "how-to-deploy-celery-to-aws"
     VERSION: str = "0.1.0"
     AUTHOR: str = "Ahilan Ashwin"
+    ENVIRONMENT: str
     CELERY_RESULT_BACKEND: RedisDsn
     CELERY_BROKER_URL: AmqpDsn
 

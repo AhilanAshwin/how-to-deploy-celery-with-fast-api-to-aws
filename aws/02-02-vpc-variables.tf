@@ -46,7 +46,7 @@ variable "vpc_private_subnets" {
 variable "vpc_enable_nat_gateway" {
   description = "Enable NAT Gateways for Private Subnets Outbound Communication"
   type        = bool
-  default     = true
+  default     = false
 }
 
 # VPC Single NAT Gateway (True or False)
@@ -56,8 +56,24 @@ variable "vpc_single_nat_gateway" {
   default     = true
 }
 
+# Subnets for the Elastic Cache cluster
+variable "vpc_elastic_cache_subnets" {
+  description = "Elastic Cache Subnets"
+  type        = list(string)
+  default     = ["10.0.31.0/24", "10.0.32.0/24"]
+}
 
 
+variable "vpc_create_elastic_cache_subnet_group" {
+  description = "VPC Create Elastic Cache Subnet Group"
+  type        = bool
+  default     = true
+}
 
+variable "vpc_create_elastic_cache_subnet_route_table" {
+  description = "VPC Create Elastic Cache Route Table"
+  type        = bool
+  default     = true
+}
 
 
