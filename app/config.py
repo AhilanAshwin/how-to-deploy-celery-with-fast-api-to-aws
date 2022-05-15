@@ -1,16 +1,19 @@
 from functools import lru_cache
-from pydantic import BaseSettings, RedisDsn, AmqpDsn
+from pydantic import BaseSettings
+
+# Set up appropriate validation
 
 
 class Settings(BaseSettings):
-    PROJECT_NAME: str = "how-to-deploy-celery-to-aws"
-    VERSION: str = "0.1.0"
-    AUTHOR: str = "Ahilan Ashwin"
-    CELERY_RESULT_BACKEND: RedisDsn
-    CELERY_BROKER_URL: AmqpDsn
+    PROJECT_NAME: str
+    VERSION: str
+    AUTHOR: str
+    ENVIRONMENT: str
+    CELERY_RESULT_BACKEND: str
+    CELERY_BROKER_URL: str
 
     class Config:
-        env_file = ".env"
+        env_file = "prod.env"
         env_file_encoding = 'utf-8'
 
 

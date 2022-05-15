@@ -37,3 +37,22 @@ output "ecs_sg_group_name" {
   description = "The name of the security group"
   value       = module.ecs-security-group.security_group_name
 }
+
+# Private Elasticahe Security Group Outputs
+## private_sg_group_id
+output "elasticache_sg_group_id" {
+  description = "The ID of the security group"
+  value       = module.elastic-cache-security-group.security_group_id
+}
+
+## private_sg_group_vpc_id
+output "elasticache_sg_group_vpc_id" {
+  description = "The VPC ID"
+  value       = module.elastic-cache-security-group.security_group_vpc_id
+}
+
+## private_sg_group_name
+output "elasticache_sg_group_name" {
+  description = "The name of the security group"
+  value       = module.elastic-cache-security-group.security_group_name
+}

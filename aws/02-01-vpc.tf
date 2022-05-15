@@ -18,6 +18,12 @@ module "vpc" {
   # create_database_internet_gateway_route = true
   # create_database_nat_gateway_route = true
 
+  # Elastic Cache Subnets
+  elasticache_subnet_group_name         = "${local.prefix}-elasticache"
+  elasticache_subnets                   = var.vpc_elastic_cache_subnets
+  create_elasticache_subnet_group       = var.vpc_create_elastic_cache_subnet_group
+  create_elasticache_subnet_route_table = var.vpc_create_elastic_cache_subnet_route_table
+
   # NAT Gateways - Outbound Communication
   enable_nat_gateway = var.vpc_enable_nat_gateway
   single_nat_gateway = var.vpc_single_nat_gateway
@@ -38,5 +44,8 @@ module "vpc" {
   }
   private_subnet_tags = {
     Type = "Private Subnets"
+  }
+  elasticache_subnet_tags = {
+    "Type" = "Elastic Cache Subnets"
   }
 }
