@@ -7,17 +7,7 @@ resource "aws_ecs_cluster" "cluster" {
   tags = local.common_tags
 }
 
-data "aws_iam_role" "ecs_task_execution_role" {
-  name = "ecsTaskExecutionRole"
-}
-
-resource "aws_cloudwatch_log_group" "logs" {
-  name = "${local.prefix}-logs"
-  tags = local.common_tags
-}
-
-
-resource "aws_ecs_service" "fastapi_service" {
+resource "aws_ecs_service" "api-service" {
   name                               = "${local.prefix}-api-service"
   cluster                            = aws_ecs_cluster.cluster.id
   desired_count                      = 1
@@ -27,7 +17,7 @@ resource "aws_ecs_service" "fastapi_service" {
   enable_ecs_managed_tags            = "false"
   launch_type                        = "FARGATE"
   scheduling_strategy                = "REPLICA"
-  task_definition                    = aws_ecs_task_definition.fastapi-task-definition.arn
+  task_definition                    = aws_ecs_task_definition.api-task-definition.arn
   enable_execute_command             = "true"
   health_check_grace_period_seconds  = 10
 
@@ -44,13 +34,23 @@ resource "aws_ecs_service" "fastapi_service" {
   }
 
   depends_on = [
-    aws_ecs_task_definition.fastapi-task-definition,
+    aws_ecs_task_definition.api-task-definition,
+    aws_elasticache_replication_group.redis,
     module.alb
   ]
   tags = local.common_tags
 }
 
-resource "aws_ecs_task_definition" "fastapi-task-definition" {
+data "aws_iam_role" "ecs_task_execution_role" {
+  name = "ecsTaskExecutionRole"
+}
+
+resource "aws_cloudwatch_log_group" "logs" {
+  name = "${local.prefix}-logs"
+  tags = local.common_tags
+}
+
+resource "aws_ecs_task_definition" "api-task-definition" {
   family                   = "${local.prefix}-api-task-definition"
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
@@ -60,7 +60,7 @@ resource "aws_ecs_task_definition" "fastapi-task-definition" {
   task_role_arn            = data.aws_iam_role.ecs_task_execution_role.arn
   container_definitions = jsonencode([
     {
-      name      = "fastapi"
+      name      = var.app_prefix
       image     = local.image
       essential = true
       environmentFiles = [
@@ -89,17 +89,18 @@ resource "aws_ecs_task_definition" "fastapi-task-definition" {
   ]
 }
 
-resource "aws_ecs_service" "service" {
+
+resource "aws_ecs_service" "worker-service" {
   name                               = "${local.prefix}-worker-service"
   cluster                            = aws_ecs_cluster.cluster.id
-  desired_count                      = 4
+  desired_count                      = 1
   wait_for_steady_state              = "true"
   deployment_maximum_percent         = 200
   deployment_minimum_healthy_percent = 100
   enable_ecs_managed_tags            = "false"
   launch_type                        = "FARGATE"
   scheduling_strategy                = "REPLICA"
-  task_definition                    = aws_ecs_task_definition.celery-task-definition.arn
+  task_definition                    = aws_ecs_task_definition.worker-task-definition.arn
   enable_execute_command             = "true"
 
   network_configuration {
@@ -109,12 +110,14 @@ resource "aws_ecs_service" "service" {
   }
 
   depends_on = [
-    aws_ecs_task_definition.celery-task-definition,
+    aws_ecs_task_definition.worker-task-definition,
+    aws_elasticache_replication_group.redis
   ]
   tags = local.common_tags
 }
 
-resource "aws_ecs_task_definition" "celery-task-definition" {
+
+resource "aws_ecs_task_definition" "worker-task-definition" {
   family                   = "${local.prefix}-worker-task-definition"
   requires_compatibilities = ["FARGATE"]
   network_mode             = "awsvpc"
@@ -124,7 +127,7 @@ resource "aws_ecs_task_definition" "celery-task-definition" {
   task_role_arn            = data.aws_iam_role.ecs_task_execution_role.arn
   container_definitions = jsonencode([
     {
-      name      = "celery"
+      name      = "celery-worker"
       image     = local.image
       essential = true
       environmentFiles = [
