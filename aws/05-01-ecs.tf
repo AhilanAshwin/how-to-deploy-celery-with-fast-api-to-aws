@@ -10,7 +10,7 @@ resource "aws_ecs_cluster" "cluster" {
 resource "aws_ecs_service" "api-service" {
   name                               = "${local.prefix}-api-service"
   cluster                            = aws_ecs_cluster.cluster.id
-  desired_count                      = 1
+  desired_count                      = 3
   wait_for_steady_state              = "true"
   deployment_maximum_percent         = 200
   deployment_minimum_healthy_percent = 100
@@ -91,7 +91,7 @@ resource "aws_ecs_task_definition" "api-task-definition" {
 resource "aws_ecs_service" "worker-service" {
   name                               = "${local.prefix}-worker-service"
   cluster                            = aws_ecs_cluster.cluster.id
-  desired_count                      = 1
+  desired_count                      = 3
   wait_for_steady_state              = "true"
   deployment_maximum_percent         = 200
   deployment_minimum_healthy_percent = 100
