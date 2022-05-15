@@ -1,13 +1,13 @@
 version: '3'
 
 services:
-  # rabbitmq:
-  #   image: rabbitmq:latest
-  #   environment:
-  #     - RABBITMQ_DEFAULT_USER=guest
-  #     - RABBITMQ_DEFAULT_PASS=guest
-  #   ports:
-  #     - 5672:5672
+  rabbitmq:
+    image: rabbitmq:latest
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    ports:
+      - 5672:5672
 
   redis:
     image: redis:latest
