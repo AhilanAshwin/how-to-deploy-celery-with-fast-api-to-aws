@@ -1,5 +1,7 @@
 from functools import lru_cache
-from pydantic import BaseSettings, RedisDsn, AmqpDsn
+from pydantic import BaseSettings
+
+# Set up appropriate validation
 
 
 class Settings(BaseSettings):
@@ -11,7 +13,7 @@ class Settings(BaseSettings):
     CELERY_BROKER_URL: str
 
     class Config:
-        env_file = "dev.env"
+        env_file = "prod.env"
         env_file_encoding = 'utf-8'
 
 
