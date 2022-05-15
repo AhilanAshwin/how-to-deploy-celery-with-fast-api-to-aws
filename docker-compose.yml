@@ -15,7 +15,7 @@ services:
       - 6379:6379
 
   webserver:
-    image: ahilanashwin/celery-fastapi
+    build: .
     env_file: &env
       - docker-compose.env
     depends_on: &deps
@@ -33,7 +33,7 @@ services:
   #   depends_on: *deps
 
   worker:
-    image: ahilanashwin/celery-fastapi
+    build: .
     env_file: *env 
     depends_on: *deps
     command: ["celery", "--app", "app.celery_etl", "worker", "-l", "INFO"]
