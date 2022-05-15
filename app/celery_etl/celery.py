@@ -3,8 +3,8 @@ from app.config import get_settings
 
 settings = get_settings()
 celery_app = Celery(main=settings.PROJECT_NAME,
-                    broker=settings.CELERY_BROKER_URL,
-                    backend=settings.CELERY_RESULT_BACKEND,
+                    # broker=settings.CELERY_BROKER_URL,
+                    # backend=settings.CELERY_RESULT_BACKEND,
                     include=["app.celery_etl.tasks"])
 # if settings.ENVIRONMENT == 'prod':
 #     celery_app.conf.broker_transport_options = {
