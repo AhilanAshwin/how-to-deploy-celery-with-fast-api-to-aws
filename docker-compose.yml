@@ -14,16 +14,16 @@ services:
     ports:
       - 6379:6379
 
-  # webserver:
-  #   image: ahilanashwin/celery-fastapi
-  #   env_file: &env
-  #     - docker-compose.env
-  #   depends_on: &deps
-  #     - rabbitmq
-  #     - redis
-  #   ports:
-  #     - 80:80
-  #   command: ["uvicorn", "app.start:app", "--host", "0.0.0.0", "--port", "80"]
+  webserver:
+    image: ahilanashwin/celery-fastapi
+    env_file: &env
+      - docker-compose.env
+    depends_on: &deps
+      - rabbitmq
+      - redis
+    ports:
+      - 80:80
+    command: ["uvicorn", "app.start:app", "--host", "0.0.0.0", "--port", "80"]
 
   # flower:
   #   image: mher/flower:latest
@@ -32,8 +32,8 @@ services:
   #   env_file: *env 
   #   depends_on: *deps
 
-  # worker:
-  #   image: ahilanashwin/celery-fastapi
-  #   env_file: *env 
-  #   depends_on: *deps
-  #   command: ["celery", "--app", "app.celery_etl", "worker", "-l", "INFO"]
+  worker:
+    image: ahilanashwin/celery-fastapi
+    env_file: *env 
+    depends_on: *deps
+    command: ["celery", "--app", "app.celery_etl", "worker", "-l", "INFO"]

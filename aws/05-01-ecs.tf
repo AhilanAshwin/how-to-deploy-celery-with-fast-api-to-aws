@@ -36,6 +36,7 @@ resource "aws_ecs_service" "api-service" {
   depends_on = [
     aws_ecs_task_definition.api-task-definition,
     aws_elasticache_replication_group.redis,
+    aws_s3_object.object,
     module.alb
   ]
   tags = local.common_tags
@@ -84,9 +85,6 @@ resource "aws_ecs_task_definition" "api-task-definition" {
       ]
     }
   ])
-  depends_on = [
-    aws_s3_object.object
-  ]
 }
 
 
@@ -104,14 +102,15 @@ resource "aws_ecs_service" "worker-service" {
   enable_execute_command             = "true"
 
   network_configuration {
-    subnets          = module.vpc.private_subnets
+    subnets          = module.vpc.public_subnets
     assign_public_ip = "true"
     security_groups  = [module.ecs-security-group.security_group_id]
   }
 
   depends_on = [
     aws_ecs_task_definition.worker-task-definition,
-    aws_elasticache_replication_group.redis
+    aws_elasticache_replication_group.redis,
+    aws_s3_object.object
   ]
   tags = local.common_tags
 }
@@ -147,7 +146,4 @@ resource "aws_ecs_task_definition" "worker-task-definition" {
       command = ["celery", "--app", "app.celery_etl", "worker", "-l", "INFO"]
     }
   ])
-  depends_on = [
-    aws_s3_object.object
-  ]
 }
