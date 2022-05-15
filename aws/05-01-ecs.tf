@@ -102,7 +102,7 @@ resource "aws_ecs_service" "worker-service" {
   enable_execute_command             = "true"
 
   network_configuration {
-    subnets          = module.vpc.public_subnets
+    subnets          = module.vpc.private_subnets
     assign_public_ip = "true"
     security_groups  = [module.ecs-security-group.security_group_id]
   }
