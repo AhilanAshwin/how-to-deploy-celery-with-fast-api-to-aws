@@ -6,8 +6,8 @@ This architecture is useful when deploying a machine learning production system,
 
 The aws infrastructure is automated with terraform in the `aws` folder of the code repo.
 
-#TODO:
+# TODO:
 
-- [x] Add documentation
+- [ ] Add documentation
 - [ ] Outline env variables
 - [ ] CI/CD for application
