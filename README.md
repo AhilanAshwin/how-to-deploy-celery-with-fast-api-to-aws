@@ -11,3 +11,5 @@ The aws infrastructure is automated with terraform in the `aws` folder of the co
 - [ ] Add documentation
 - [ ] Outline env variables
 - [ ] CI/CD for application
+- [ ] How to setup
+- [ ] How to run
