@@ -1,4 +1,4 @@
-# How to Deploy Python Celery with FastApi to AWS with Terraform
+# How to Deploy Python Celery and FastApi to AWS with Terraform
 
 This repository to serves as a guideline as to how to deploy a celery application with fastapi onto AWS. Celery is a async task queue to relegate work outside the HTTP resposne cycle. That way your WSGI server isn't tied down to long running process. In other words, implementing a queue improves the response time of your web server by distributing complex tasks amongst many workers.
 
