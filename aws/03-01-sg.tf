@@ -7,7 +7,7 @@ module "ecs-security-group" {
   description = "Security group for ecs cluster. HTTP port open for entire VPC, egress ports are all world open"
   vpc_id      = module.vpc.vpc_id
   # Ingress Rules & CIDR blocks
-  ingress_rules       = ["http-80-tcp"]
+  ingress_rules       = ["http-80-tcp", "nfs-tcp"]
   ingress_cidr_blocks = [module.vpc.vpc_cidr_block]
   # Egress Rule - all-all open
   egress_rules = ["all-all"]
