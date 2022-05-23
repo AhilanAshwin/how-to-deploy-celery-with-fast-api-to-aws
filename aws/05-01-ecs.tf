@@ -7,6 +7,7 @@ resource "aws_ecs_cluster" "cluster" {
   tags = local.common_tags
 }
 
+
 resource "aws_ecs_service" "api-service" {
   name                               = "${local.prefix}-api-service"
   cluster                            = aws_ecs_cluster.cluster.id
@@ -46,10 +47,12 @@ data "aws_iam_role" "ecs_task_execution_role" {
   name = "ecsTaskExecutionRole"
 }
 
+
 resource "aws_cloudwatch_log_group" "logs" {
   name = "${local.prefix}-logs"
   tags = local.common_tags
 }
+
 
 resource "aws_ecs_task_definition" "api-task-definition" {
   family                   = "${local.prefix}-api-task-definition"
